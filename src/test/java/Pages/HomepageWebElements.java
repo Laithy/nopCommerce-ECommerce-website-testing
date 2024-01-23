@@ -14,4 +14,7 @@ public class HomepageWebElements {
     public WebElement regWE (){
         return driver.findElement(By.cssSelector("a[class=\"ico-register\"]"));
     }
+    public WebElement loginWE (){
+        return driver.findElement(By.cssSelector("a[class=\"ico-login\"]"));
+    }
 }
