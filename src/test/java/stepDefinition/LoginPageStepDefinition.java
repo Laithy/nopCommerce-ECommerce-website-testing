@@ -6,13 +6,18 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.asserts.SoftAssert;
+
 
 public class LoginPageStepDefinition {
     WebDriver driver = null;
     HomepageWebElements homeWE;
     LoginPageWebElements logWE;
+    SoftAssert soft;
+
     @Given("User opens the browser_Login feature")
     public void init_driver (){
         //Creating Driver
@@ -21,6 +26,7 @@ public class LoginPageStepDefinition {
         driver = new ChromeDriver();
         homeWE = new HomepageWebElements(driver);
         logWE = new LoginPageWebElements(driver);
+        soft = new SoftAssert();
     }
     @Given("User navigates to the website \"(.*)\" LoginFeature$")
     public void user_navigates_to_the_Website (String Website) throws InterruptedException {
@@ -44,12 +50,19 @@ public class LoginPageStepDefinition {
         logWE.passwordWB().sendKeys(password);
     }
     @Then("Click on log in")
-    public void Click_on_login () {
+    public void Click_on_login () throws InterruptedException {
         logWE.loginButtonWB().click();
+        Thread.sleep(3000);
+
+        soft.assertTrue(driver.findElement(By.cssSelector("div[class=\"header-links-wrapper\"]")).getText().contains("Log out"),"Logout button was not found");
+        soft.assertTrue(driver.findElement(By.cssSelector("div[class=\"header-links-wrapper\"]")).getText().contains("My account"),"My account button was not found");
+
+
     }
     @And("Closes the browser_Login feature")
     public void close_driver () throws InterruptedException {
         Thread.sleep(5000);
         driver.quit();
+        soft.assertAll();
     }
 }

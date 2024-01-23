@@ -17,4 +17,10 @@ public class HomepageWebElements {
     public WebElement loginWE (){
         return driver.findElement(By.cssSelector("a[class=\"ico-login\"]"));
     }
+//    public WebElement logoutWE () {
+//        return driver.findElement(By.partialLinkText("Log out"));
+//    }
+//    public WebElement myAccountWE () {
+//        return driver.findElement(By.partialLinkText("My account"));
+//    }
 }

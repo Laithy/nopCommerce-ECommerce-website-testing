@@ -8,11 +8,12 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 
 public class RegistrationStepDefinition {
     WebDriver driver = null;
@@ -20,6 +21,7 @@ public class RegistrationStepDefinition {
     HomepageWebElements homeWE;
     RegistrationResultWebElements regResWE;
     LoginPageWebElements logWE;
+    SoftAssert softAssert;
     @Given("User opens the browser_Registration feature")
     public void init_driver (){
         //Creating Driver
@@ -30,11 +32,14 @@ public class RegistrationStepDefinition {
         homeWE = new HomepageWebElements(driver);
         regResWE = new RegistrationResultWebElements(driver);
         logWE = new LoginPageWebElements(driver);
+        softAssert = new SoftAssert();
     }
     @Given("User navigates to the website \"(.*)\" Registration feature$")
     public void user_navigates_to_the_Website (String Website) throws InterruptedException {
         driver.navigate().to(Website);
         driver.manage().window().maximize();
+        String currentWebsite = driver.getCurrentUrl();
+        Assert.assertTrue(currentWebsite.contains(Website),"Website isn't right");
         Thread.sleep(1000);
     }
     @And("Clicks on register button from the homepage")
@@ -87,17 +92,21 @@ public class RegistrationStepDefinition {
     }
     @Then("User should see a success message \"(.*)\"$")
     public void succsess_message (String msg) {
-        Assert.assertTrue("Expected result doesn't equal the actual result",regResWE.resultMSG().getText().contains(msg));
+        softAssert.assertTrue(regResWE.resultMSG().getText().contains(msg),"Expected result doesn't equal the actual result");
     }
     @And("the color should be green hex code= \"(.*)\"$")
     public void succsess_msg_color (String expectedHex){
+        SoftAssert softAssert = new SoftAssert();
         String color = regResWE.resultMSG().getCssValue("color");
         String actualHex = Color.fromString(color).asHex();
-        Assert.assertTrue(actualHex.contains(expectedHex));
+        softAssert.assertTrue(actualHex.contains(expectedHex));
+        softAssert.assertAll();
+
     }
     @And("Closes the browser_Registration feature")
     public void close_driver () throws InterruptedException {
         Thread.sleep(5000);
         driver.quit();
+        softAssert.assertAll();
     }
 }
