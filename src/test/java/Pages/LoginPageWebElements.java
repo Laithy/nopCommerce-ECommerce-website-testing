@@ -20,4 +20,7 @@ public class LoginPageWebElements {
     public WebElement loginButtonWB () {
         return driver.findElement(By.cssSelector("button[class=\"button-1 login-button\"]"));
     }
+    public WebElement failureMsgWB (){
+        return driver.findElement(By.cssSelector("div[class=\"message-error validation-summary-errors\"]"));
+    }
 }

@@ -1,3 +1,4 @@
+@Regression
 Feature: User should be able to make a new account on the site
 
   Scenario: User registers with valid data
@@ -8,7 +9,7 @@ Feature: User should be able to make a new account on the site
     And enters first name "Mahmoud"
     And enters last name "Elaithy"
     And enters date of birth "22" "February" "1998"
-    And enters a valid email "zyqeqe@imagepoet.net"
+    And enters a valid email "byruhyda@closetab.email"
     And enters a password "12345678"
     And enters the same password again "12345678"
     And click register

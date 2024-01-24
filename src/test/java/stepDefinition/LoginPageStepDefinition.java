@@ -9,6 +9,7 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.Color;
 import org.testng.asserts.SoftAssert;
 
 
@@ -53,11 +54,18 @@ public class LoginPageStepDefinition {
     public void Click_on_login () throws InterruptedException {
         logWE.loginButtonWB().click();
         Thread.sleep(3000);
-
+    }
+    @And("assert positive scenario")
+    public void assert_positive (){
         soft.assertTrue(driver.findElement(By.cssSelector("div[class=\"header-links-wrapper\"]")).getText().contains("Log out"),"Logout button was not found");
         soft.assertTrue(driver.findElement(By.cssSelector("div[class=\"header-links-wrapper\"]")).getText().contains("My account"),"My account button was not found");
-
-
+    }
+    @And ("assert negative scenario \"(.*)\" \"(.*)\"$")
+    public void assert_negative (String actualMsg , String hexCode){
+        soft.assertTrue(logWE.failureMsgWB().getText().contains(actualMsg));
+        String color = logWE.failureMsgWB().getCssValue("color");
+        String actualHex = Color.fromString(color).asHex();
+        soft.assertTrue(hexCode.contains(actualHex));
     }
     @And("Closes the browser_Login feature")
     public void close_driver () throws InterruptedException {
