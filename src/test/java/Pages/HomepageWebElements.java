@@ -25,5 +25,6 @@ public class HomepageWebElements {
     public WebElement suggGridWE () {
         return driver.findElement(By.cssSelector("ul[id=\"ui-id-1\"]"));
     }
+    public WebElement productWE (String productName) {return driver.findElement(By.partialLinkText(productName));}
 
 }
