@@ -22,5 +22,8 @@ public class HomepageWebElements {
     public WebElement searchBarWE () {
         return driver.findElement(By.cssSelector("input[class=\"search-box-text ui-autocomplete-input\"]"));
     }
+    public WebElement suggGridWE () {
+        return driver.findElement(By.cssSelector("ul[id=\"ui-id-1\"]"));
+    }
 
 }

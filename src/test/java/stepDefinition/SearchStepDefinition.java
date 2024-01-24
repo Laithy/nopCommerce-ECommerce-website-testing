@@ -38,10 +38,24 @@ public class SearchStepDefinition {
         driver.manage().window().maximize();
         Thread.sleep(1000);
     }
+    @And("click the search bar")
+    public void click_search_bar (){
+        homeWE.searchBarWE().click();
+    }
     @Then("types \"(.*)\" in the search bar$")
     public void search_for_apple (String keyword) throws InterruptedException {
         Thread.sleep(1000);
         homeWE.searchBarWE().sendKeys(keyword);
+    }
+    @And("waits till the suggestions appear")
+    public void wait_for_suggestions() throws InterruptedException {
+        Thread.sleep(2000);
+        if (homeWE.suggGridWE().isDisplayed()){
+            System.out.println("Suggestions are visible");
+        }
+        else{
+            System.out.println("Suggestions are not visible");
+        }
     }
     @And("clicks the search button")
     public void click_search_button (){
@@ -79,5 +93,16 @@ public class SearchStepDefinition {
         driver.quit();
         soft.assertAll();
     }
-
+    @Then("Assert that the suggestions match the keyword \"(.*)\"$")
+    public void assert_suggestion (String keyword) {
+        System.out.println("The keyword is "+keyword);
+        List<WebElement> childrenElements = homeWE.suggGridWE().findElements(By.cssSelector("li[class=\"ui-menu-item\"]"));
+        for (WebElement childElement : childrenElements) {
+            String itemTitle = childElement.getText();
+            soft.assertTrue(itemTitle.contains(keyword));
+            if (itemTitle.contains(keyword)) {
+                System.out.println("Items match the keyword " +keyword);
+            }
+        }
+    }
 }

@@ -13,3 +13,10 @@ Feature: User should be able to search for items and see reasonable suggestions
     Then closes the browser_Search function
 
   Scenario: User types Apple in the search bar he should see suggestions match the searched word
+    Given the user opens the browser_Search function
+    And navigates to the site "https://demo.nopcommerce.com/"_Search function
+    And click the search bar
+    Then types "Apple" in the search bar
+    And waits till the suggestions appear
+    Then Assert that the suggestions match the keyword "Apple"
+    Then closes the browser_Search function
