@@ -25,5 +25,13 @@ public class ProductWebElements {
     public WebElement wishlistQTYWE () {
         return driver.findElement(By.cssSelector("span[class=\"wishlist-qty\"]"));
     }
-
+    public WebElement addToCartButtonWE () {
+        return driver.findElement(By.cssSelector("div[class=\"add-to-cart-panel\"]>button[type=\"button\"]"));
+    }
+    public WebElement shoppingCartButtonWE () {
+        return driver.findElement(By.cssSelector("li[id=\"topcartlink\"]>a[href=\"/cart\"]"));
+    }
+    public WebElement flyOutCartWE (String title) {
+        return driver.findElement(By.cssSelector("div[id=\"flyout-cart\"]>div[class=\"mini-shopping-cart\"]>div[class=\"buttons\"]")).findElement(By.cssSelector("button[onclick=\"setLocation('/cart')\"]"));
+    }
 }

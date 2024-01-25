@@ -26,5 +26,7 @@ public class HomepageWebElements {
         return driver.findElement(By.cssSelector("ul[id=\"ui-id-1\"]"));
     }
     public WebElement productWE (String productName) {return driver.findElement(By.partialLinkText(productName));}
-
+    public WebElement itemGridWE () {
+        return driver.findElement(By.cssSelector("div[class=\"product-grid home-page-product-grid\"]>div[class=\"item-grid\"]"));
+    }
 }
