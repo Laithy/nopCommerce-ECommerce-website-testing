@@ -19,5 +19,5 @@ Feature: User should be able to add an item to a cart and checkout
     And click continue button_Payment
     And continue payment information "Visa" "Jane Doe" "4001919257537193" "09" "2026" "837"
     And click continue button_Payment information
-    And click on confirm order
-#    Then closes the browser_Cart function
+    And click on confirm order "Your order has been successfully processed!"
+    Then closes the browser_Cart function

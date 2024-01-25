@@ -13,4 +13,7 @@ public class CheckoutConfirmOrderWebElements {
     public WebElement confirmButtonWE () {
         return driver.findElement(By.cssSelector("button[class=\"button-1 confirm-order-next-step-button\"]"));
     }
+    public WebElement checkoutMsgWE () {
+        return driver.findElement(By.cssSelector("div[class=\"page-body checkout-data\"]"));
+    }
 }

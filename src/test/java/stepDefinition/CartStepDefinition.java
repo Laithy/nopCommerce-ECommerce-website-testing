@@ -13,6 +13,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
@@ -162,10 +163,15 @@ public class CartStepDefinition {
     public void click_continue_paymentInfo () {
         paymentInfoWE.continueButtonWE().click();
     }
-    @And("click on confirm order")
-    public void click_confirm () throws InterruptedException {
+    @And("click on confirm order \"(.*)\"$")
+    public void click_confirm (String expectedMsg) throws InterruptedException {
         Thread.sleep(1000);
         confirmWE.confirmButtonWE().click();
+        Thread.sleep(1000);
+        String actualMsg = confirmWE.checkoutMsgWE().getText();
+        System.out.println("Actuall msg is "+actualMsg);
+        System.out.println("Expected msg is "+expectedMsg);
+        Assert.assertTrue(actualMsg.contains(expectedMsg));
     }
     @Then("closes the browser_Cart function")
     public void close_browser () throws InterruptedException {
@@ -173,6 +179,4 @@ public class CartStepDefinition {
         driver.quit();
         soft.assertAll();
     }
-
-
 }
