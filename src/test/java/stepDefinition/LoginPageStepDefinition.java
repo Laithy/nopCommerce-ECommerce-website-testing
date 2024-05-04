@@ -6,10 +6,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.Color;
 import org.testng.asserts.SoftAssert;
 
 
@@ -37,35 +35,31 @@ public class LoginPageStepDefinition {
     }
     @And("click on the login button")
     public void click_login_button () throws InterruptedException {
-        homeWE.loginWE().click();
+        homeWE.ClickLoginButton();
         Thread.sleep(1000);
     }
     @When("Login with email \"(.*)\"$")
     public void Login_email (String email){
-        logWE.emailWB().clear();
-        logWE.emailWB().sendKeys(email);
+        logWE.EnterMail(email);
     }
     @And("Login with password \"(.*)\"$")
     public void Login_password (String password){
-        logWE.passwordWB().clear();
-        logWE.passwordWB().sendKeys(password);
+        logWE.EnterPassword(password);
     }
     @Then("Click on log in")
     public void Click_on_login () throws InterruptedException {
-        logWE.loginButtonWB().click();
+        logWE.ClickLoginButton();
         Thread.sleep(3000);
     }
     @And("assert positive scenario")
     public void assert_positive (){
-        soft.assertTrue(driver.findElement(By.cssSelector("div[class=\"header-links-wrapper\"]")).getText().contains("Log out"),"Logout button was not found");
-        soft.assertTrue(driver.findElement(By.cssSelector("div[class=\"header-links-wrapper\"]")).getText().contains("My account"),"My account button was not found");
+        soft.assertTrue(logWE.GetHeaderText().contains("Log out"),"Logout button was not found");
+        soft.assertTrue(logWE.GetHeaderText().contains("My account"),"My account button was not found");
     }
     @And ("assert negative scenario \"(.*)\" \"(.*)\"$")
     public void assert_negative (String actualMsg , String hexCode){
-        soft.assertTrue(logWE.failureMsgWB().getText().contains(actualMsg));
-        String color = logWE.failureMsgWB().getCssValue("color");
-        String actualHex = Color.fromString(color).asHex();
-        soft.assertTrue(hexCode.contains(actualHex));
+        soft.assertTrue(logWE.GetMsgText().contains(actualMsg));
+        soft.assertTrue(hexCode.contains(logWE.GetMsgColor()));
     }
     @And("Closes the browser_Login feature")
     public void close_driver () throws InterruptedException {

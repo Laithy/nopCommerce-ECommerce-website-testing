@@ -1,7 +1,6 @@
 package stepDefinition;
 
 import Pages.HomepageWebElements;
-import Pages.LoginPageWebElements;
 import Pages.RegisterPageWebElements;
 import Pages.RegistrationResultWebElements;
 import io.cucumber.java.en.And;
@@ -10,8 +9,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.Color;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
@@ -20,8 +17,8 @@ public class RegistrationStepDefinition {
     RegisterPageWebElements regWE;
     HomepageWebElements homeWE;
     RegistrationResultWebElements regResWE;
-    LoginPageWebElements logWE;
     SoftAssert softAssert;
+
     @Given("User opens the browser_Registration feature")
     public void init_driver (){
         //Creating Driver
@@ -31,7 +28,6 @@ public class RegistrationStepDefinition {
         regWE = new RegisterPageWebElements(driver);
         homeWE = new HomepageWebElements(driver);
         regResWE = new RegistrationResultWebElements(driver);
-        logWE = new LoginPageWebElements(driver);
         softAssert = new SoftAssert();
     }
     @Given("User navigates to the website \"(.*)\" Registration feature$")
@@ -44,64 +40,49 @@ public class RegistrationStepDefinition {
     }
     @And("Clicks on register button from the homepage")
     public void clicks_on_the_register_button () throws InterruptedException {
-        homeWE.regWE().click();
+        homeWE.ClickRegisterButton();
         Thread.sleep(1000);
     }
     @When("User selects the gender")
     public void user_selects_the_gender () {
-        regWE.genderWE().click();
+        regWE.SelectGender();
     }
     @And("enters first name \"(.*)\"$")
     public void enters_first_name (String firstName) {
-        regWE.firstNameWE().clear();
-        regWE.firstNameWE().sendKeys(firstName);
+        regWE.EnterFirstname(firstName);
     }
     @And("enters last name \"(.*)\"$")
     public void enters_last_name (String lastName) {
-        regWE.lastNameWE().clear();
-        regWE.lastNameWE().sendKeys(lastName);
+        regWE.EnterLastname(lastName);
     }
     @And("enters date of birth \"(.*)\" \"(.*)\" \"(.*)\"$")
     public void enters_date_of_birth (String day, String month, String year) {
-        Select drpDay = new Select(regWE.day());
-        drpDay.selectByValue(day);
-        Select drpMonth = new Select(regWE.month());
-        drpMonth.selectByVisibleText(month);
-        Select drpYear = new Select(regWE.year());
-        drpYear.selectByValue(year);
+        regWE.EnterBirthDate(day, month, year);
     }
     @And("enters a valid email \"(.*)\"$")
     public void enters_valid_email (String email) {
-        regWE.emailWE().clear();
-        regWE.emailWE().sendKeys(email);
+        regWE.EnterMail(email);
     }
     @And("enters a password \"(.*)\"$")
     public void enter_password (String password) {
-        regWE.passwordWE().clear();
-        regWE.passwordWE().sendKeys(password);
+        regWE.EnterPassword(password);
     }
     @And("enters the same password again \"(.*)\"$")
     public void re_enter_password (String password) {
-        regWE.confirmPasswordWE().clear();
-        regWE.confirmPasswordWE().sendKeys(password);
+        regWE.EnterPasswordConfirmation(password);
     }
     @And("click register")
     public void click_register () throws InterruptedException {
-        regWE.regButton().click();
+        regWE.ClickRegister();
         Thread.sleep(3000);
     }
     @Then("User should see a success message \"(.*)\"$")
-    public void succsess_message (String msg) {
-        softAssert.assertTrue(regResWE.resultMSG().getText().contains(msg),"Expected result doesn't equal the actual result");
+    public void success_message (String msg) {
+        softAssert.assertTrue(regResWE.GetMsgText().contains(msg),"Expected result doesn't equal the actual result");
     }
     @And("the color should be green hex code= \"(.*)\"$")
-    public void succsess_msg_color (String expectedHex){
-        SoftAssert softAssert = new SoftAssert();
-        String color = regResWE.resultMSG().getCssValue("color");
-        String actualHex = Color.fromString(color).asHex();
-        softAssert.assertTrue(actualHex.contains(expectedHex));
-        softAssert.assertAll();
-
+    public void success_msg_color (String expectedHex){
+        softAssert.assertTrue(regResWE.GetMsgColor().contains(expectedHex));
     }
     @And("Closes the browser_Registration feature")
     public void close_driver () throws InterruptedException {

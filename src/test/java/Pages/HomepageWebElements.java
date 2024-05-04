@@ -10,23 +10,34 @@ public class HomepageWebElements {
     public HomepageWebElements (WebDriver mainDriver){
         this.driver = mainDriver;
     }
-    public WebElement regWE (){
+
+    //Locators
+    private WebElement regWE (){
         return driver.findElement(By.cssSelector("a[class=\"ico-register\"]"));
     }
-    public WebElement loginWE (){
+    private WebElement loginWE (){
         return driver.findElement(By.cssSelector("a[class=\"ico-login\"]"));
     }
-    public WebElement searchButtonWE () {
+    private WebElement searchButtonWE () {
         return driver.findElement(By.cssSelector("button[type=\"submit\"]"));
     }
-    public WebElement searchBarWE () {
+    private WebElement searchBarWE () {
         return driver.findElement(By.cssSelector("input[class=\"search-box-text ui-autocomplete-input\"]"));
     }
-    public WebElement suggGridWE () {
+    private WebElement suggGridWE () {
         return driver.findElement(By.cssSelector("ul[id=\"ui-id-1\"]"));
     }
-    public WebElement productWE (String productName) {return driver.findElement(By.partialLinkText(productName));}
-    public WebElement itemGridWE () {
+    private WebElement productWE (String productName) {return driver.findElement(By.partialLinkText(productName));}
+    private WebElement itemGridWE () {
         return driver.findElement(By.cssSelector("div[class=\"product-grid home-page-product-grid\"]>div[class=\"item-grid\"]"));
     }
+
+    //Actions
+    public void ClickRegisterButton () {
+        regWE().click();
+    }
+    public void ClickLoginButton () {
+        loginWE().click();
+    }
+
 }
